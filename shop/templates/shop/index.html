@@ -45,7 +45,7 @@
               <button
                 class="navbar-toggler"
                 type="button"
-                data-bs-toggle="collapse"
+                data-bs-toggle="collapse" 
                 data-bs-target="#navbarNav"
                 aria-controls="navbarNav"
                 aria-expanded="false"
@@ -123,6 +123,49 @@
                 </div>
             </div>
             {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if product_objects.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ product_objects.previous_page_number }}{% if request.GET.item_name %}&item_name={{ request.GET.item_name }}{% endif %}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </span>
+                                </li>
+                            {% endif %}
+
+                            {% for num in product_objects.paginator.page_range %}
+                                {% if product_objects.number == num %}
+                                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ num }}{% if request.GET.item_name %}&item_name={{ request.GET.item_name }}{% endif %}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if product_objects.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ product_objects.next_page_number }}{% if request.GET.item_name %}&item_name={{ request.GET.item_name }}{% endif %}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </span>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>    
+                </div>
             </div>
         </div>
     </body>
